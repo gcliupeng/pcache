@@ -1,0 +1,8 @@
+pcache.lo: /root/php-5.5.24/ext/pcache/pcache.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/root/php-5.5.24/ext/pcache $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /root/php-5.5.24/ext/pcache/pcache.c -o pcache.lo 
+$(phplibdir)/pcache.la: ./pcache.la
+	$(LIBTOOL) --mode=install cp ./pcache.la $(phplibdir)
+
+./pcache.la: $(shared_objects_pcache) $(PCACHE_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_pcache) $(PCACHE_SHARED_LIBADD)
+
