@@ -263,6 +263,7 @@ int insertKey(char *key,int key_len,char *val,int val_len,int ttl)
 	global_head->freeBlockNum-=count;
 	global_head->usedBlockNum+=count;
 	global_head->freeNodeNum--;
+	global_head->usedNodeNum++;
 	global_head->p[index]->size=val_len;
 	global_head->p[index]->is_free=0;
 	global_head->p[index]->ttl=time(0)+ttl;
