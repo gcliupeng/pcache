@@ -17,3 +17,6 @@
 （3）make & make install
 （4）修改php.ini，加载扩展
 安装前需要源码安装php。
+
+#使用方法
+见pcache.php
