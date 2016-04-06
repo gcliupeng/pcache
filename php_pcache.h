@@ -47,6 +47,7 @@ PHP_MINFO_FUNCTION(pcache);
 PHP_FUNCTION(pcache_add);
 PHP_FUNCTION(pcache_get);
 PHP_FUNCTION(pcache_del);
+PHP_FUNCTION(pcache_info);
 PHP_FUNCTION(confirm_pcache_compiled);	/* For testing, remove later. */
 
 /* 

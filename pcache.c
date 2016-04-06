@@ -92,6 +92,7 @@ const zend_function_entry pcache_functions[] = {
 	PHP_FE(pcache_add,	NULL)		/* For testing, remove later. */
 	PHP_FE(pcache_get,	NULL)
 	PHP_FE(pcache_del,	NULL)
+	PHP_FE(pcache_info,	NULL)
 	PHP_FE_END	/* Must be the last line in pcache_functions[] */
 };
 /* }}} */
@@ -457,7 +458,7 @@ PHP_FUNCTION(pcache_get)
 	}
 	RETURN_STRINGL(strg,pos,0);
 }
-PHP_FUNCTION(pcache_del)
+PHP_FUNCTION(pcache_info)
 {
 	int len=0;
 	char *arg = NULL;
@@ -475,7 +476,30 @@ PHP_FUNCTION(pcache_del)
 	s[n]=0;
 	RETURN_STRINGL(s,n,0);
 }
-
+PHP_FUNCTION(pcache_del)
+{
+	if(pthread_mutex_lock(g_mutex)!=0 ) {
+ 		RETURN_FALSE;
+ 	}else{
+ 		int len=0;
+		char *arg = NULL;
+		int arg_len;
+		char *strg;
+		char * name;
+		int name_len;
+		if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s",&name,&name_len) == FAILURE) 
+		{
+				return;
+		}
+		int index=findKey(name,name_len);
+		if(index!=-1){
+			removeKey(index);
+			RETURN_TRUE;
+		}else{
+			RETURN_FALSE;
+		}
+	}
+}
 
 /* }}} */
 /* The previous line is meant for vim and emacs, so it can correctly fold and 
